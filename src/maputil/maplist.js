@@ -1,40 +1,78 @@
 import Map from 'ol/Map';
 import View from 'ol/View';
-import baselayers from '@/maputil/baselayer.js'
+import baselayers from '@/maputil/baselayer.js';
+import LayerGroup from 'ol/layer/Group';
 
 
-let defaultmap = function (target,view,layers,opens,...other){
-  this.maphavelayers =  [];
-  this.opens = opens;
+let defaultmap = function ({target,view,baseinfos,baseopens,vectorinfos,vectoropens,...other}){
+  this.map = {};
   this.other = other;
-  this.baselayers = new baselayers(layers);
+  this.baselayers = new baselayers(baseinfos);
+  this.openbaselayers = {};
+  this.vectorlayers = [];
+  this.openvectorlayers = {};
+
   //根据传入的底图所具有的底图图层信息，组成底图图层组赋值maphavelayers
-  this.maphavelayers = this.baselayers.layers.filter(layer =>{
-    return opens.includes(layer.values_.id)
+  let maphavelayers = this.baselayers.layers.filter(layer =>{
+    return baseopens.includes(layer.values_.id)
   })
+  this.openbaselayers = new LayerGroup({
+    zIndex:1,
+    layers:maphavelayers
+  })
+  //根据传入的动态图所具有的底图图层信息，组成底图图层组赋值maphavelayers
+  let vectoropenslayers = []
+  if(vectorinfos&&vectoropens){
+      vectoropenslayers = this.vectorlayers.layers.filter(layer =>{
+      return vectoropens.includes(layer.values_.id)
+    })
+  }
+  this.openvectorlayers = new LayerGroup({
+    zIndex:2,
+    layers:vectoropenslayers
+  })
+  
   //创建底图map
   this.map = new Map({
     target: target,
-    layers: this.maphavelayers,
+    layers: [this.openbaselayers,this.openvectorlayers],
     view: new View(view)
   })
 }
-defaultmap.prototype.togglemap = function(nowopens){
-  //移除没有在当前nowopens的底图图层
-  let removelayers =  this.map.getLayers().array_.filter(layer => {
-    return !nowopens.includes(layer.values_.id)
+/**
+ * 功   能：底图切换
+ * 实现思想：map移除老的openbaselayers（底图图层组），
+ *  清空openbaselayers并赋予新值，
+ *  将新的openbaselayers加入map。
+ * 参数：nowopens：['baselayer[id]','baselayer[id]',```]
+ */
+defaultmap.prototype.togglemap = function(nowbaseopens){
+  let newmaphavelayers = this.baselayers.layers.filter(layer =>{
+    return nowbaseopens.includes(layer.values_.id)
   });
-  removelayers.forEach(layer => {
-    this.map.removeLayer(layer)
+  this.map.removeLayer(this.openbaselayers)
+  this.openbaselayers = null;
+  this.openbaselayers = new LayerGroup({
+    zIndex:1,
+    layers:newmaphavelayers
   });
-  //添加在baselayers中但没有在opens中的图层
-  this.baselayers.layers.forEach(layer => {
-    if(nowopens.includes(layer.values_.id)&&!this.opens.includes(layer.values_.id)){
-      this.map.addLayer(layer)
-    }
-  });
-  //将对象中的maphavelayers和opens指向最新
-  this.opens = nowopens;
-  this.maphavelayers = this.map.getLayers();
+  this.map.addLayer(this.openbaselayers)
 };
+/**
+ * 功   能：创建图层库
+ * 实现思想：解析可无限子集的图层树，
+ *  将树中的图层组成一维数组，
+ *  创造vectorlayers对象。
+ * 参数：layerstree：{
+          id:'dian',
+          title:'点图层集合',
+          children: [
+            {id:'mz',title:'',url: "",sublayers:{name: "DL"},type:'wms'},
+          ]
+        }
+ */
+defaultmap.prototype.vectorallin = function(layerstree){
+  console.log(layerstree)
+}
+
 export let maplist = defaultmap

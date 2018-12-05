@@ -9,6 +9,7 @@
         <keep-alive>
           <component 
           :is="whichList"
+          :maplist='maplist'
           v-if="!(whichList =='')"
           @toggle-map='togglemap'
           class="layersListPopup"></component>
@@ -46,12 +47,12 @@ export default {
   mounted(){
     //创建的时候将图层配置打入全局变量
     this.$root.layersConfig = layersConfig
-    this.maplist = new maplist(
-      this.$refs.mapdiv,
-      this.view,
-      this.$root.layersConfig.baseLayers,
-      this.$root.layersConfig.baseMapList.difault.baseLayers
-    );
+    this.maplist = new maplist({
+      target:this.$refs.mapdiv,
+      view:this.view,
+      baseinfos:this.$root.layersConfig.baseLayers,
+      baseopens:this.$root.layersConfig.baseMapList.difault.baseLayers
+    });
     this.$root.maplist = this.maplist;
   },
   methods:{

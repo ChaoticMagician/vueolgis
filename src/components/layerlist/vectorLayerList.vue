@@ -1,49 +1,62 @@
 <template>
-  <ul class="vector-list"  >
-    <li 
-    class="vector-list-li"
-    v-for="trem in listdata"
-    :key="trem.id"
-    >
-      <span class="vector-list-li-span">{{trem.title}}</span>
-    </li>
-  </ul>
+<div  >
+  <el-tree
+    class="vector-list"
+    :data="treedata"
+    show-checkbox
+    node-key="id"
+    :indent='10'
+    highlight-current
+    :props="defaultProps">
+  </el-tree>
+</div>
 </template>
 
 <script>
-
+import vectorlayer from '@/maputil/vectorlayer.js';
 export default {
   name:'vectorLayerList',
+  props:['maplist'],
   data(){
     return{
-      listdata:this.$root.layersConfig.baseMapList,
+      treedata:this.$root.layersConfig.featuerLayers,
+      layerslist:[],
+      vectorlayers:{},
+      defaultProps: {
+        children: 'children',
+        label: 'title'
+      }
     }
   },
+  mounted(){
+    this.parsetree(this.treedata,this.defaultProps.children)
+    this.vectorlayers = new vectorlayer({
+      layersinfo: this.layerslist
+    })
+  },
   methods:{
-
+    /***
+     * 解析图层树结构，将树结构变为一维数组
+     */
+    parsetree:function (obj,childrenKey){
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          const element = obj[key];
+          if(element[childrenKey]){
+            this.parsetree(element[childrenKey],childrenKey)
+          }else{
+            this.layerslist.push(element)
+          }
+        }
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
 .vector-list{
-  display: inline-block;
-  list-style: none;
-  width: 390px;
-  color: #3e3e3e;
-}
-.vector-list-li-span {
-  display: block;
-  background: white;
-  text-align: center;
-
-}
-.vector-list-li{
-  margin-bottom: 12px;
-  font-size: 1.14em;
-}
-.vector-list-li:hover{
-  color:rgba(92, 142, 223, 0.822)
+  margin: 8px;
 }
 </style>
 

@@ -42,6 +42,12 @@ const baseMapList={
     id:"other2",
     title:"电子地图",
     baseLayers:['diazilayer']
+  },
+  yaogan1:{
+    type:'yaogan',
+    id:"other3",
+    title:"遥感影像",
+    baseLayers:['yaoganlayer']
   }
 }
 
@@ -53,20 +59,34 @@ const featuerLayers = [
     sublayers:{
       name: "DL"
     },
-    type:'wms'
+    type:'wms',
+    kind:'LineString'
   },
   {
     id:'dian',
     title:'点图层集合',
-    children:  {
-      id:'mz',
-      title:'小王庄门址',
-      url: "http://123.56.17.204:8081/geoserver/selfmap/wms",
-      sublayers:{
-        name: "DL"
+    children: [
+      {
+        id:'mz',
+        title:'小王庄门址',
+        url: "http://123.56.17.204:8081/geoserver/selfmap/wms",
+        sublayers:{
+          name: "DL"
+        },
+        type:'wms',
+        kind:'Point'
       },
-      type:'wms'
-    },
+      {
+        id:'lz',
+        title:'小王庄楼址',
+        url: "http://123.56.17.204:8081/geoserver/selfmap/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=selfmap:FGM&outputFormat=application%2Fjson",
+        sublayers:{
+          name: "FGM"
+        },
+        type:'geojson',
+        kind:'Polygon'
+      },
+    ]
   }
 ]
 export {baseLayers,baseMapList,featuerLayers};
