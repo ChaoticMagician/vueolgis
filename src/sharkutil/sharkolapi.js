@@ -176,9 +176,9 @@ var sharkolapi =  {
     //加载geojson
     loadgeojson:function(url,layername,opacity = 1,visible = true){
       var l = new VectorLayer({
-        name:layername,
+        name:'DL',
         source: new VectorSource({
-          url: url,
+          url: 'http://123.56.17.204:8081/geoserver/selfmap/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=selfmap:DL&outputFormat=application%2Fjson',
           format: new GeoJSON()
         }),
         // style: sharkstyles.setStyle(),

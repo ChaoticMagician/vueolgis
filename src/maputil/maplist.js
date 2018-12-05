@@ -7,7 +7,7 @@ import LayerGroup from 'ol/layer/Group';
 let defaultmap = function ({target,view,baseinfos,baseopens,vectorinfos,vectoropens,...other}){
   this.map = {};
   this.other = other;
-  this.baselayers = new baselayers(baseinfos);
+  this.baselayers = new baselayers({layersinfo:baseinfos});
   this.openbaselayers = {};
   this.vectorlayers = [];
   this.openvectorlayers = {};
@@ -31,7 +31,6 @@ let defaultmap = function ({target,view,baseinfos,baseopens,vectorinfos,vectorop
     zIndex:2,
     layers:vectoropenslayers
   })
-  
   //创建底图map
   this.map = new Map({
     target: target,

@@ -60,7 +60,7 @@ const featuerLayers = [
       name: "DL"
     },
     type:'wms',
-    kind:'LineString'
+    category:'LineString'
   },
   {
     id:'dian',
@@ -74,7 +74,7 @@ const featuerLayers = [
           name: "DL"
         },
         type:'wms',
-        kind:'Point'
+        category:'Point'
       },
       {
         id:'lz',
@@ -84,7 +84,7 @@ const featuerLayers = [
           name: "FGM"
         },
         type:'geojson',
-        kind:'Polygon'
+        category:'Polygon'
       },
     ]
   }

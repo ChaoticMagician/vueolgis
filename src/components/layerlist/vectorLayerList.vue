@@ -32,7 +32,8 @@ export default {
     this.parsetree(this.treedata,this.defaultProps.children)
     this.vectorlayers = new vectorlayer({
       layersinfo: this.layerslist
-    })
+    });
+    console.log(this.vectorlayers.layers);
   },
   methods:{
     /***

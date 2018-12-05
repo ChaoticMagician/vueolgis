@@ -1,8 +1,9 @@
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 //创建对象，并将传入的图层信息映射为底图对象
-let baselayers = function (layersinfo){
+let baselayers = function ({layersinfo}){
   this.layersinfo = layersinfo;
+  this.layers = {};
   this._info2layer_ = function(info,index,arr){
     let layer = {};
     //图层信息转化为对象的方法，目前只有天地图类型底图；
