@@ -54,6 +54,19 @@ const featuerLayers = [
       name: "DL"
     },
     type:'wms'
+  },
+  {
+    id:'dian',
+    title:'点图层集合',
+    children:  {
+      id:'mz',
+      title:'小王庄门址',
+      url: "http://123.56.17.204:8081/geoserver/selfmap/wms",
+      sublayers:{
+        name: "DL"
+      },
+      type:'wms'
+    },
   }
 ]
 export {baseLayers,baseMapList,featuerLayers};

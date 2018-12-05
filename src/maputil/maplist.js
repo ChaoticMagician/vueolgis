@@ -26,7 +26,6 @@ defaultmap.prototype.togglemap = function(nowopens){
   });
   removelayers.forEach(layer => {
     this.map.removeLayer(layer)
-    console.log(layer,nowopens)
   });
   //添加在baselayers中但没有在opens中的图层
   this.baselayers.layers.forEach(layer => {

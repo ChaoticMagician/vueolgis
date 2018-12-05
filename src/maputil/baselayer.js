@@ -10,7 +10,8 @@ let baselayers = function (layersinfos){
       case 'TDTtile':
         layer =  new TileLayer({
           source: new XYZ({
-            url: info.url
+            url: info.url,
+            projection: "EPSG:3857",
           }),
           name: info.name,
           type: info.type,
@@ -30,7 +31,7 @@ let baselayers = function (layersinfos){
       this._info2layer_
     );
   }else{
-    console.error('底图加载失败，传入底图图层数组。')
+    console.error('底图加载失败，传入底图图层数组有误。')
   };
 }
 //在底图库中添加图层的方法

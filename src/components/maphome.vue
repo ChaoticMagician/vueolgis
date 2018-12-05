@@ -4,12 +4,12 @@
     <!--这里是图层切换、图层控制按钮组件 -->
     <div class="layersList" @mouseleave.stop.self="whichList=''" >
       <div @mouseenter.stop.self="whichList='baseMapList'" :class="['layersListDiv',whichList=='baseMapList'? 'layersListDivIs':'']" id='baseMapList' >底图切换</div>
-      <div @mouseenter.stop.self="whichList='2'" :class="['layersListDiv',whichList==2? 'layersListDivIs':'']" id="layerList"   >图层控制</div>
-      <div @mouseenter.stop.self="whichList='3'" :class="['layersListDiv',whichList==3? 'layersListDivIs':'']" id="tameList"    >实时数据</div>
+      <div @mouseenter.stop.self="whichList='vectorLayerList'" :class="['layersListDiv',whichList=='vectorLayerList'? 'layersListDivIs':'']" id="layerList"   >图层控制</div>
+      <div @mouseenter.stop.self="whichList='thisList'" :class="['layersListDiv',whichList=='thisList'? 'layersListDivIs':'']" id="tameList"    >实时数据</div>
         <keep-alive>
           <component 
           :is="whichList"
-          v-if="!(whichList!=='baseMapList')"
+          v-if="!(whichList =='')"
           @toggle-map='togglemap'
           class="layersListPopup"></component>
         </keep-alive>
@@ -22,12 +22,9 @@
 import * as layersConfig from '../../static/mapconfig/layersConfig';
 import { maplist } from '@/maputil/maplist.js'
 //页面组件
-import baseMapList from "@/components/layerlist/baseMapList"
-
-import Map from 'ol/Map';
-import View from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
-import XYZ from 'ol/source/XYZ';
+import baseMapList from "@/components/layerlist/baseMapList";
+import vectorLayerList from "@/components/layerlist/vectorLayerList";
+import thisList from "@/components/layerlist/thisList";
 export default {
   name: 'HelloWorld',
   data () {
@@ -44,18 +41,18 @@ export default {
     }
   },
   components:{
-    baseMapList
+    baseMapList,vectorLayerList,thisList
   },
   mounted(){
     //创建的时候将图层配置打入全局变量
-
     this.$root.layersConfig = layersConfig
     this.maplist = new maplist(
       this.$refs.mapdiv,
       this.view,
       this.$root.layersConfig.baseLayers,
       this.$root.layersConfig.baseMapList.difault.baseLayers
-    )
+    );
+    this.$root.maplist = this.maplist;
   },
   methods:{
     togglemap(maplayers){
