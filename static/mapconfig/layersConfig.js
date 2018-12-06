@@ -56,9 +56,7 @@ const featuerLayers = [
     id:'dl',
     title:'小王庄道路',
     url: "http://123.56.17.204:8081/geoserver/selfmap/wms",
-    sublayers:{
-      name: "DL"
-    },
+    name: "selfmap:DL",
     type:'wms',
     category:'LineString'
   },
@@ -70,9 +68,7 @@ const featuerLayers = [
         id:'mz',
         title:'小王庄门址',
         url: "http://123.56.17.204:8081/geoserver/selfmap/wms",
-        sublayers:{
-          name: "DL"
-        },
+        name: "selfmap:MZ",
         type:'wms',
         category:'Point'
       },
@@ -80,9 +76,7 @@ const featuerLayers = [
         id:'lz',
         title:'小王庄楼址',
         url: "http://123.56.17.204:8081/geoserver/selfmap/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=selfmap:FGM&outputFormat=application%2Fjson",
-        sublayers:{
-          name: "FGM"
-        },
+        name: "FGM",
         type:'geojson',
         category:'Polygon'
       },

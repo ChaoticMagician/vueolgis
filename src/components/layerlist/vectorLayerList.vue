@@ -7,7 +7,8 @@
     node-key="id"
     :indent='10'
     highlight-current
-    :props="defaultProps">
+    :props="defaultProps"
+    @check = 'treecheck'>
   </el-tree>
 </div>
 </template>
@@ -33,7 +34,7 @@ export default {
     this.vectorlayers = new vectorlayer({
       layersinfo: this.layerslist
     });
-    console.log(this.vectorlayers.layers);
+    this.maplist.vectorallin(this.vectorlayers);
   },
   methods:{
     /***
@@ -50,6 +51,15 @@ export default {
           }
         }
       }
+    },
+    treecheck:function(data,{checkedKeys,checkedNodes,halfCheckedKeys,halfCheckedNodes}){
+      let openlayer = [];
+      checkedNodes.forEach(element => {
+        if (!element[this.defaultProps.children]){
+          openlayer.push(element.id)
+        }
+      },this);
+      this.maplist.togglevector(openlayer)
     }
   }
 }

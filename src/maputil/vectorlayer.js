@@ -1,6 +1,8 @@
 import GeoJSON from 'ol/format/GeoJSON.js';
 import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
+import ImageLayer from 'ol/layer/Image.js';
+import ImageWMS from 'ol/source/ImageWMS.js';
 
 let vectorlayer = function ({layersinfo}){
   this.layersinfo = layersinfo;
@@ -17,9 +19,8 @@ let vectorlayer = function ({layersinfo}){
         layer = new VectorLayer({
           id: info.id,
           title: info.title,
-          name: info.sublayers.name,
+          name: info.name,
           type: info.type,
-          zIndex: index+1,
           source: new VectorSource({
             url: info.url,
             format: new GeoJSON()
@@ -28,9 +29,25 @@ let vectorlayer = function ({layersinfo}){
           visible: true
         });
       break;
-
+      case 'wms':
+        layer = new ImageLayer({
+          id: info.id,
+          title: info.title,
+          name: info.name,
+          type: info.type,
+          source: new ImageWMS({
+            url: info.url,
+            params: {'LAYERS': info.name},
+            serverType: 'geoserver',
+            crossOrigin: 'anonymous'
+          }),
+          opacity:1,
+          visible: true
+        });
+      break;
       default:
-        console.error(info.type+'是未定义的图层数据源类别,')
+        layer = {message: info.type+'是未定义的图层数据源类别!'}
+        console.error(info.type+'是未定义的图层数据源类别!')
       break;
     };
     return layer

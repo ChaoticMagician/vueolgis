@@ -37,7 +37,7 @@ export default {
         center: [117.395, 38.93],
         zoom: 14,
         minZoom:6,
-        maxZoom:16
+        maxZoom:17
       }
     }
   },
