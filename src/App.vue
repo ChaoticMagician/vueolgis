@@ -15,8 +15,7 @@ export default {
   height: 100%;
   width: 100%;
 }
-.ol-overlaycontainer-stopevent{
-  /*隐藏地图左上角的+-号*/
+/* .ol-zoom{
   display: none;
-}
+} */
 </style>

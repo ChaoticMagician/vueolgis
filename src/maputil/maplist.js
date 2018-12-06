@@ -39,7 +39,11 @@ let defaultmap = function ({target,view,baseinfos,baseopens,vectorinfos,vectorop
     target: target,
     layers: [this.openbaselayers,this.openvectorlayers],
     view: new View(view)
-  })
+  });
+  //去除默认缩放组件
+  this.map.removeControl(this.map.controls.array_[0]);
+  //去除默认旋转组件
+  this.map.removeControl(this.map.controls.array_[0]);
 }
 /**
  * 功   能：挂载底图图层库

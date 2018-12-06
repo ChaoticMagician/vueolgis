@@ -82,6 +82,25 @@ let vectorlayer = function ({layersinfo}){
     console.error('图层加载失败，传入动态图层数组有误。')
   };
 }
+vectorlayer.prototype.initvectorlayer = function(info){
+  let thislayer = this._info2layer_(info);
 
+  //依据图层类别添加新图层到不同位置
+  switch (info.category) {
+    case 'Polygon':
+      this.layers.splice(this.Polygonarr.length,0,thislayer); 
+    break;
+    case 'LineString':
+      this.layers.splice(this.Polygonarr.length+this.linearr.length,0,thislayer); 
+    break;
+    case 'Point':
+      this.layers.push(thislayer); 
+    break;
+    default:
+      console.error(info.category+'是未定义的图层类别,')
+    break;
+  }
+  console.log(this.layers)
+}
 
 export default vectorlayer

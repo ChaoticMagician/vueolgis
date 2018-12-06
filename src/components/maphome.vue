@@ -48,10 +48,12 @@ export default {
     //创建的时候将图层配置打入全局变量
     this.$root.layersConfig = layersConfig
     this.maplist = new maplist({
-      target:this.$refs.mapdiv,
-      view:this.view,
-      baseinfos:this.$root.layersConfig.baseLayers,
-      baseopens:this.$root.layersConfig.baseMapList.difault.baseLayers
+      target:this.$refs.mapdiv,                         //地图的窗口元素
+      view:this.view,                                   //地图的显示比例和定位
+      baseinfos:this.$root.layersConfig.baseLayers,     //地图的底图库
+      baseopens:this.$root.layersConfig.baseMapList.difault.baseLayers, //需要显示的底图id集合
+      vectorinfos:[],                                   //地图的动态图库
+      vectoropens:[],                                   //地图的动态图id集合
     });
     this.$root.maplist = this.maplist;
   },
