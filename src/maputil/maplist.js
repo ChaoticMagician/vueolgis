@@ -5,7 +5,7 @@ import LayerGroup from 'ol/layer/Group';
 import vectorlayer from '@/maputil/vectorlayer.js';
 
 
-let defaultmap = function ({target,view,baseinfos,baseopens,vectorinfos,vectoropens,...other}){
+let maplist = function ({target,view,baseinfos,baseopens,vectorinfos,vectoropens,...other}){
   this.map = {};
   this.other = other;
   this.baselayers = new baselayers({layersinfo:baseinfos});
@@ -51,7 +51,7 @@ let defaultmap = function ({target,view,baseinfos,baseopens,vectorinfos,vectorop
  * 实现思想：获取图层集合参数，将this.baselayers = 参数集合
  * 参数：layersarr：[layer,layer,layer]
  */
-defaultmap.prototype.baseallin = function(layersarr){
+maplist.prototype.baseallin = function(layersarr){
   this.baselayers = null;
   this.baselayers = layersarr;
 }
@@ -62,7 +62,7 @@ defaultmap.prototype.baseallin = function(layersarr){
  *  将新的openbaselayers加入map。
  * 参数：nowopens：['baselayer[id]','baselayer[id]',```]
  */
-defaultmap.prototype.togglemap = function(nowbaseopens){
+maplist.prototype.togglemap = function(nowbaseopens){
   let newmaphavelayers = this.baselayers.layers.filter(layer =>{
     return nowbaseopens.includes(layer.values_.id)
   });
@@ -80,18 +80,18 @@ defaultmap.prototype.togglemap = function(nowbaseopens){
  * 实现思想：获取图层集合参数，将this.vectorlayers = 参数集合
  * 参数：layersarr：[layer,layer,layer]
  */
-defaultmap.prototype.vectorallin = function(layersarr){
+maplist.prototype.vectorallin = function(layersarr){
   this.vectorlayers = null;
   this.vectorlayers = layersarr;
 }
 /**
  * 功   能：动态图层切换
  * 实现思想：map移除老的openvectorlayers（底图图层组），
- *  清空opendefaultmap.prototype.togglemaplayers并赋予新值，
+ *  清空openmaplist.prototype.togglemaplayers并赋予新值，
  *  将新的openvectorlayers加入map。
  * 参数：nowopens：['baselayer[id]','baselayer[id]',```]
  */
-defaultmap.prototype.togglevector = function(nowvectoropens){
+maplist.prototype.togglevector = function(nowvectoropens){
   let newvectorhavelayers = this.vectorlayers.layers.filter(layer =>{
     return nowvectoropens.includes(layer.values_.id)
   });
@@ -105,6 +105,4 @@ defaultmap.prototype.togglevector = function(nowvectoropens){
   });
   this.map.addLayer(this.openvectorlayers)
 }
-
-
-export let maplist = defaultmap
+export default maplist

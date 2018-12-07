@@ -82,6 +82,22 @@ let vectorlayer = function ({layersinfo}){
     console.error('图层加载失败，传入动态图层数组有误。')
   };
 }
+/**
+ * 功   能：添加动态图层库
+ * 实现思想：将传入的底图info信息转换成对应图层
+ *  分析图层的点、线、面类别，
+ *  依据图层的类别将图层添加进图层库的不同位置
+ *  将创建的底图push进入layers库，
+ *  以备maplist对象的调用。
+ * 参数：info：{
+ *           id:'',
+ *           title:'',
+ *           url: "",
+ *           name: "",
+ *           type:'geojson'/'wms'
+ *           category:'Polygon'/'Point'/'LineString'
+ *         },
+ */
 vectorlayer.prototype.initvectorlayer = function(info){
   let thislayer = this._info2layer_(info);
 

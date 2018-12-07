@@ -20,8 +20,7 @@
 
 <script>
 //功能组件
-import * as layersConfig from '../../static/mapconfig/layersConfig';
-import { maplist } from '@/maputil/maplist.js'
+import maplist from '@/maputil/maplist.js'
 //页面组件
 import baseMapList from "@/components/layerlist/baseMapList";
 import vectorLayerList from "@/components/layerlist/vectorLayerList";
@@ -45,8 +44,6 @@ export default {
     baseMapList,vectorLayerList,thisList
   },
   mounted(){
-    //创建的时候将图层配置打入全局变量
-    this.$root.layersConfig = layersConfig
     this.maplist = new maplist({
       target:this.$refs.mapdiv,                         //地图的窗口元素
       view:this.view,                                   //地图的显示比例和定位
