@@ -28,7 +28,10 @@ let maplist = function ({target,view,baseinfos,baseopens,vectorinfos,vectoropens
       this.vectorlayers = new vectorlayer({layersinfo:vectorinfos});
       vectoropenslayers = this.vectorlayers.layers.filter(layer =>{
       return vectoropens.includes(layer.values_.id)
-    })
+    });
+    vectoropenslayers.forEach((layer,index) => {
+      layer.setZIndex(this.baseindex+index+10)
+    });
   }
   this.openvectorlayers = new LayerGroup({
     zIndex:2,

@@ -3,7 +3,7 @@
     <el-button @click="routerpush('/mapview/map',mapquery)" >map测试</el-button>
   </div>
 </template>
-
+ 
 <script>
 export default {
   name:'testbutten',
@@ -14,7 +14,7 @@ export default {
           center: [117.1599, 38.7524],
           zoom: 15,
           minZoom:6,
-          maxZoom:17
+          // maxZoom:17
         },
         baseinfos:null,                  
         baseopens:['diazilayer','biaozhulayer'],
@@ -33,8 +33,7 @@ export default {
   }
 }
 </script>
-
+ 
 <style scoped>
-
+ 
 </style>
-
