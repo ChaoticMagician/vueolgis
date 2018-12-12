@@ -45,7 +45,7 @@ export default {
  
 <style scoped>
 .toggelmap-ul{
-  width: 13%;
+  width: 12%;
 }
 .base-map-list-li{
  
