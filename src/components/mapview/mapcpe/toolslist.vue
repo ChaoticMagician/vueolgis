@@ -98,6 +98,7 @@ export default {
           break;
         case 'allmap0':
         //地图归位
+        //liguobiao 这里需要改
            this.view.fit(this.extent,{padding: [0.5,0.5,0.5,0.5]});
           break;
         case 'getinfo0':

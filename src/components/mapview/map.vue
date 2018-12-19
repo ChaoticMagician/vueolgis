@@ -37,7 +37,6 @@ export default {
       maplist:{},
       intoview:{
         extent:this.$route.query.view.extent||[116.60,38.62,118.19,39.24],
-        projection: "EPSG:4326",
         center: this.$route.query.view.center||[117.395, 38.93],
         zoom: this.$route.query.view.zoom||14,
         minZoom: this.$route.query.view.minZoom||6,
@@ -72,7 +71,7 @@ export default {
     //创建地图
     this.maplist = new maplist({
       target:this.$refs.mapdiv,                         //地图的窗口元素
-      view:this.intoview,                                   //地图的显示比例和定位
+      view:this.intoview,                               //地图的显示比例和定位
       baseinfos:this.baseinfos,                         //地图的底图库
       baseopens:this.baseopens,                         //需要显示的底图id集合
       vectorinfos:this.vectorinfos||this.layerslist,    //地图的动态图库

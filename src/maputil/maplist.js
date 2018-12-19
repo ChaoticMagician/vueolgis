@@ -13,7 +13,14 @@ let maplist = function ({target,view,baseinfos,baseopens,vectorinfos,vectoropens
   this.vectorlayers = null;
   this.openvectorlayers = {};
   this.baseindex = this.baselayers.layers.length
-
+  //根据传入的view对象，对this.view进行实例化
+  view.center = view.center||[117.395, 38.93];
+  view.zoom = view.zoom||14;
+  view['projection'] = "EPSG:4326";
+  this.view = new View(view);
+  if (view.extent) {
+    this.view.fit(view.extent)
+  } 
   //根据传入的底图所具有的底图图层信息，组成底图图层组赋值maphavelayers
   let maphavelayers = this.baselayers.layers.filter(layer =>{
     return baseopens.includes(layer.values_.id)
@@ -41,7 +48,7 @@ let maplist = function ({target,view,baseinfos,baseopens,vectorinfos,vectoropens
   this.map = new Map({
     target: target,
     layers: [this.openbaselayers,this.openvectorlayers],
-    view: new View(view)
+    view: this.view
   });
   //去除默认缩放组件
   this.map.removeControl(this.map.controls.array_[0]);
