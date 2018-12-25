@@ -12,15 +12,13 @@ let maplist = function ({target,view,baseinfos,baseopens,vectorinfos,vectoropens
   this.openbaselayers = {};
   this.vectorlayers = null;
   this.openvectorlayers = {};
-  this.baseindex = this.baselayers.layers.length
+  this.baseindex = this.baselayers.layers.length;
   //根据传入的view对象，对this.view进行实例化
   view.center = view.center||[117.395, 38.93];
   view.zoom = view.zoom||14;
+  this.oldview = view;
   view['projection'] = "EPSG:4326";
   this.view = new View(view);
-  if (view.extent) {
-    this.view.fit(view.extent)
-  } 
   //根据传入的底图所具有的底图图层信息，组成底图图层组赋值maphavelayers
   let maphavelayers = this.baselayers.layers.filter(layer =>{
     return baseopens.includes(layer.values_.id)
@@ -50,6 +48,10 @@ let maplist = function ({target,view,baseinfos,baseopens,vectorinfos,vectoropens
     layers: [this.openbaselayers,this.openvectorlayers],
     view: this.view
   });
+  //定位传入的预定范围
+  if (this.oldview.iextent) {
+    this.view.fit(this.oldview.iextent)
+  } 
   //去除默认缩放组件
   this.map.removeControl(this.map.controls.array_[0]);
   //去除默认旋转组件
@@ -114,5 +116,24 @@ maplist.prototype.togglevector = function(nowvectoropens){
     layers: newvectorhavelayers
   });
   this.map.addLayer(this.openvectorlayers)
+}
+/**
+ * 功   能：还原地图原定位
+ * 实现思想：用原传入的view对象重新定位地图。
+ */
+maplist.prototype.gotoOldView = function(){
+  if(this.oldview.iextent){
+    this.view.fit(this.oldview.iextent)
+  }else{
+    this.view.setZoom(this.oldview.zoom);
+    this.view.setCenter(this.oldview.center);
+  }
+}
+/**
+ * 功   能：地图缩放
+ * 实现思想：用原传入的view对象重新定位地图。
+ */
+maplist.prototype.mapzoom = function(num){
+  this.view.setZoom(this.view.getZoom()+num);
 }
 export default maplist

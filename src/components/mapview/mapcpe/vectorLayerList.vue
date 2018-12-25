@@ -16,7 +16,7 @@
     </el-button>
   </div>
   <el-tree
-    v-if="ifopenlayermaster"
+    v-show="ifopenlayermaster"
     class="vector-list"
     :data="treedata"
     show-checkbox

@@ -1,8 +1,7 @@
 <template>
   <div
     class="maptools"
-    v-if="toolsarr[0]"
-    >
+    v-if="toolsarr[0]">
     <el-tooltip
       class="item"
       effect="dark"
@@ -25,7 +24,7 @@
 export default {
   name:'toolslist',
   props:[
-    'view','maplist','extent'
+    'view','maplist'
   ],
   data(){
     return{
@@ -90,16 +89,16 @@ export default {
       switch (whitchone+thisstate) {
         case 'bigger0':
         //地图放大，，可改成拉框放大
-          this.view.setZoom(this.view.getZoom()+0.5); 
+          this.maplist.mapzoom(0.5)
           break;
         case 'litter0':
         //地图缩小，，可改成拉框缩小
-          this.view.setZoom(this.view.getZoom()-0.5); 
+          this.maplist.mapzoom(-0.5)
           break;
         case 'allmap0':
         //地图归位
-        //liguobiao 这里需要改
-           this.view.fit(this.extent,{padding: [0.5,0.5,0.5,0.5]});
+          //  this.view.fit(this.extent,{padding: [0.5,0.5,0.5,0.5]});
+          this.maplist.gotoOldView()
           break;
         case 'getinfo0':
         //开启地图属性点选
@@ -158,7 +157,11 @@ export default {
           break;
         case 'delet0':
         //清空地图
-          
+          for (const key in this.toolsstate) {
+            if (this.toolsstate.hasOwnProperty(key)) {
+              this.toolsstate[key] = 0
+            }
+          }
           break;
         default:
           break;

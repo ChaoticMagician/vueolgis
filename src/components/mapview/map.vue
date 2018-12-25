@@ -16,10 +16,7 @@
     </vectorLayerList>
     <toolslist
     :view='view'
-    :maplist='maplist'
-    :extent='intoview.extent'
-    >
-
+    :maplist='maplist'>
     </toolslist>
   </div>
 </template>
@@ -36,7 +33,7 @@ export default {
       layerslist:[],
       maplist:{},
       intoview:{
-        extent:this.$route.query.view.extent||[116.60,38.62,118.19,39.24],
+        iextent:this.$route.query.view.extent||[117.60,38.62,118.19,39.24],
         center: this.$route.query.view.center||[117.395, 38.93],
         zoom: this.$route.query.view.zoom||14,
         minZoom: this.$route.query.view.minZoom||6,
